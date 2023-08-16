@@ -36,14 +36,13 @@ function convertTime(sec) {
     const myDate = new Date(sec * 1000);
     return myDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
-const apiKey = process.env.APIKey;
 function getWeather(city = "Delhi", n = 0) {
     axios({
         method: 'GET',
         url: 'https://weather-by-api-ninjas.p.rapidapi.com/v1/weather',
         params: { city },
         headers: {
-            'X-RapidAPI-Key': apiKey,
+            'X-RapidAPI-Key': '80130d9dd2mshdb6b68cb6cb0d61p18e20ejsn9f978bc3adfe',
             'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com'
         }
     })
