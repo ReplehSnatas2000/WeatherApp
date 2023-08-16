@@ -49,18 +49,25 @@ function getWeather(city = "Delhi", n = 0) {
         .then(res => {
             let { cloud_pct, temp, feels_like, humidity, min_temp, max_temp,
                 wind_speed, wind_degrees, sunrise, sunset } = res.data;
-            document.querySelectorAll(".temp")[n].innerHTML = temp;
-            document.querySelector(".min_temp").innerHTML = min_temp + "&deg;C";
-            document.querySelector(".max_temp").innerHTML = max_temp + "&deg;C";
-            document.querySelector(".cloud_pct").innerHTML = cloud_pct + "&percnt;";
-            document.querySelectorAll(".feels_like")[n].innerHTML = feels_like + "&deg;C";
-            document.querySelectorAll(".humidity")[n].innerHTML = humidity;
-            document.querySelector(".wind_speed").innerHTML = (wind_speed * (18 / 5)).toFixed(2);
-            if (wind_speed) document.querySelector(".wind_degrees").innerHTML = windDirection(wind_degrees);
-            else document.querySelector(".wind_degrees").innerHTML = "";
-            document.querySelector(".sunrise").innerHTML = convertTime(sunrise);
-            document.querySelector(".sunset").innerHTML = convertTime(sunset);
-            spanCity.innerText = city;
+            if (!n) {
+                document.querySelectorAll(".temp")[n].innerHTML = temp;
+                document.querySelector(".min_temp").innerHTML = min_temp + "&deg;C";
+                document.querySelector(".max_temp").innerHTML = max_temp + "&deg;C";
+                document.querySelector(".cloud_pct").innerHTML = cloud_pct + "&percnt;";
+                document.querySelectorAll(".feels_like")[n].innerHTML = feels_like + "&deg;C";
+                document.querySelectorAll(".humidity")[n].innerHTML = humidity;
+                document.querySelector(".wind_speed").innerHTML = (wind_speed * (18 / 5)).toFixed(2);
+                if (wind_speed) document.querySelector(".wind_degrees").innerHTML = windDirection(wind_degrees);
+                else document.querySelector(".wind_degrees").innerHTML = "";
+                document.querySelector(".sunrise").innerHTML = convertTime(sunrise);
+                document.querySelector(".sunset").innerHTML = convertTime(sunset);
+                spanCity.innerText = city;
+            }
+            else {
+                document.querySelectorAll(".temp")[n].innerHTML = temp;
+                document.querySelectorAll(".feels_like")[n].innerHTML = feels_like + "&deg;C";
+                document.querySelectorAll(".humidity")[n].innerHTML = humidity;
+            }
         })
         .catch(err => alert("Invalid Place Name!"));
 }
