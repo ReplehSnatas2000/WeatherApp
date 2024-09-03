@@ -32,39 +32,21 @@ function windDirection(deg) {
     }
     return direction;
 }
-async function getCoordinates(city) {
-    let response = await axios.get('https://geocoding-by-api-ninjas.p.rapidapi.com/v1/geocoding', {
-        params: { city },
-        headers: {
-            'x-rapidapi-key': '80130d9dd2mshdb6b68cb6cb0d61p18e20ejsn9f978bc3adfe',
-            'x-rapidapi-host': 'geocoding-by-api-ninjas.p.rapidapi.com'
-        }
-    })
-        .then(data1 => {
-            let coordinates = data1.data[0];
-            return coordinates;
-        })
-        .catch(err => console.log(err));
-    return response;
-}
 function convertTime(sec) {
     const myDate = new Date(sec * 1000);
     return myDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 async function getWeather(city = "Delhi", n = 0) {
-    let data = await getCoordinates(city);
-    axios({
-        method: 'GET',
-        url: 'https://weather-by-api-ninjas.p.rapidapi.com/v1/weather',
-        params: { lat: data.latitude, lon: data.longitude },
+    fetch(`http://localhost:3000/weather?city=${city}`, {
+        method: "GET",
         headers: {
-            'X-RapidAPI-Key': '80130d9dd2mshdb6b68cb6cb0d61p18e20ejsn9f978bc3adfe',
-            'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com'
+            "Content-Type": "application/json"
         }
     })
+        .then(res => res.json())
         .then(res => {
             let { cloud_pct, temp, feels_like, humidity, min_temp, max_temp,
-                wind_speed, wind_degrees, sunrise, sunset } = res.data;
+                wind_speed, wind_degrees, sunrise, sunset } = res;
             if (!n) {
                 document.querySelectorAll(".temp")[n].innerHTML = temp;
                 document.querySelector(".min_temp").innerHTML = min_temp + "&deg;C";
