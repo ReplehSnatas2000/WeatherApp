@@ -32,15 +32,31 @@ function windDirection(deg) {
     }
     return direction;
 }
+async function getCoordinates(city) {
+    let response = await axios.get('https://geocoding-by-api-ninjas.p.rapidapi.com/v1/geocoding', {
+        params: { city },
+        headers: {
+            'x-rapidapi-key': '80130d9dd2mshdb6b68cb6cb0d61p18e20ejsn9f978bc3adfe',
+            'x-rapidapi-host': 'geocoding-by-api-ninjas.p.rapidapi.com'
+        }
+    })
+        .then(data1 => {
+            let coordinates = data1.data[0];
+            return coordinates;
+        })
+        .catch(err => console.log(err));
+    return response;
+}
 function convertTime(sec) {
     const myDate = new Date(sec * 1000);
     return myDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
-function getWeather(city = "Delhi", n = 0) {
+async function getWeather(city = "Delhi", n = 0) {
+    let data = await getCoordinates(city);
     axios({
         method: 'GET',
         url: 'https://weather-by-api-ninjas.p.rapidapi.com/v1/weather',
-        params: { city },
+        params: { lat: data.latitude, lon: data.longitude },
         headers: {
             'X-RapidAPI-Key': '80130d9dd2mshdb6b68cb6cb0d61p18e20ejsn9f978bc3adfe',
             'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com'
