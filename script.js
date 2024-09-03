@@ -37,7 +37,7 @@ function convertTime(sec) {
     return myDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 async function getWeather(city = "Delhi", n = 0) {
-    fetch(`http://localhost:3000/weather?city=${city}`, {
+    fetch(`https://weatherapp-rxfq.onrender.com/weather?city=${city}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
